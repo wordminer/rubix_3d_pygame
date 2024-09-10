@@ -1,4 +1,3 @@
-from .. import const
 
 class Rubix_cube():
     def __init__(self, block_x, block_y, block_z, block_side, block_distance):
@@ -10,8 +9,6 @@ class Rubix_cube():
         self.block_distance = block_distance
 
     def create_cube(self):
-        print(const.win_hight)
+        pass
 
 
-new = Rubix_cube(1, 1, 1, 1, 1)
-new.create_cube()
