@@ -1,3 +1,4 @@
+from argorithm.distance import distance_in_space
 
 class Rubix_cube():
     def __init__(self, block_x, block_y, block_z, block_side, block_distance):
@@ -7,7 +8,10 @@ class Rubix_cube():
 
         self.block_side = block_side
         self.block_distance = block_distance
-        self.block = [1]
+
+        self.block = []
+        self.block_appear = []
+        self.block_face_coord =[]
 
     def create_cube(self):
         #Center = [0,0,0]
@@ -32,8 +36,22 @@ class Rubix_cube():
                         for vec_z in [-1,1]
             ] ]
 
+    def distance_argument(self, Camera_pos : tuple):
+        self.block_appear = []
+        self.block_face_coord = []
+
+        self.block_appear = [
+            [distance_in_space(Camera_pos, block_pos[0]), k] 
+            for k, block_pos in enumerate(self.block)]
         
+        self.block_appear.sort(reverse=True)
+        
+        for block_pos in self.block:
+            Point_coordinate =  [[distance_in_space(point_coord, Camera_pos), k] for k,point_coord in enumerate(block_pos[1])]
+            Point_coordinate.sort(reverse=True)
+            self.block_face_coord.append(Point_coordinate)
 
 test = Rubix_cube(2, 2, 2, 1, 0)
 test.create_cube()
+test.distance_argument((0,0,3))
 
