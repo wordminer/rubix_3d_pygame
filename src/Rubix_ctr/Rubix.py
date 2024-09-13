@@ -1,4 +1,6 @@
 from argorithm.distance import distance_in_space
+from argorithm.convert_point import convert_3D_point, convert_screen_point
+from Window import ctr_Win
 
 class Rubix_cube():
     def __init__(self, block_x, block_y, block_z, block_side, block_distance):
@@ -51,7 +53,20 @@ class Rubix_cube():
             Point_coordinate.sort(reverse=True)
             self.block_face_coord.append(Point_coordinate)
 
-test = Rubix_cube(2, 2, 2, 1, 0)
-test.create_cube()
-test.distance_argument((0,0,3))
 
+    def show_rubix(self, Window : ctr_Win.WINDOW, Camera_coord, Scale : list, Point_argument : list):
+        
+        for block_stt in self.block_appear:
+            point_pos = self.block_face_coord[block_stt[1]]
+            
+            for face_point in point_pos:
+                point = self.block[block_stt[1]][1][face_point[1]]
+                convered_point = convert_screen_point(
+                    Window.width, Window.hight,
+                    convert_3D_point(point, Camera_coord),
+                    Scale[0], Scale[1]
+                )
+
+                #print(convered_point)
+
+                Window.draw_point(Point_argument[0], convered_point, Point_argument[1])

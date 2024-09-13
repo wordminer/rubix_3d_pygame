@@ -1,4 +1,4 @@
-from pygame import display, event, QUIT
+from pygame import display, event, QUIT, draw
 
 class WINDOW():
     def __init__(self, width, hight):
@@ -11,4 +11,11 @@ class WINDOW():
             if events.type == QUIT:
                 return False 
             
+    def draw_point(self, color_point, coord_point, radius_point):
+        draw.circle(self.window,
+                    color_point,
+                    coord_point,
+                    radius_point)
         
+    def update_event(self):
+        display.update()
