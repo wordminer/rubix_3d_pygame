@@ -37,8 +37,11 @@ class Rubix_cube():
                     for vec_y in [-1,1]
                         for vec_z in [-1,1]
             ] ]
+        for k in self.block:
+            for face in k[1]:
+                print(face)
 
-    def distance_argument(self, Camera_pos : tuple):
+    def distance_argument(self, Camera_pos : tuple[float, float, float]):
         self.block_appear = []
         self.block_face_coord = []
 
@@ -54,7 +57,7 @@ class Rubix_cube():
             self.block_face_coord.append(Point_coordinate)
 
 
-    def show_rubix(self, Window : ctr_Win.WINDOW, Camera_coord, Scale : list, Point_argument : list):
+    def show_rubix(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float], Point_argument : list[str, int]):
         
         for block_stt in self.block_appear:
             point_pos = self.block_face_coord[block_stt[1]]
@@ -63,7 +66,7 @@ class Rubix_cube():
                 point = self.block[block_stt[1]][1][face_point[1]]
                 convered_point = convert_screen_point(
                     Window.width, Window.hight,
-                    convert_3D_point(point, Camera_coord),
+                    convert_3D_point(point, Camera_pos),
                     Scale[0], Scale[1]
                 )
 

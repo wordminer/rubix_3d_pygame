@@ -1,2 +1,4 @@
-win_width = 800
-win_hight = 600
+WIN_WIDTH = 800
+WIN_HIGHT = 600
+
+CAMERA_COORD = [0,0,10]

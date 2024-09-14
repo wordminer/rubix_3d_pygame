@@ -11,7 +11,7 @@ class WINDOW():
             if events.type == QUIT:
                 return False 
             
-    def draw_point(self, color_point, coord_point, radius_point):
+    def draw_point(self, color_point, coord_point : tuple[float, float], radius_point):
         draw.circle(self.window,
                     color_point,
                     coord_point,
