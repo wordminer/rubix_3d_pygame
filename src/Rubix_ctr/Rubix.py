@@ -1,9 +1,11 @@
 from argorithm.distance import distance_in_space
 from argorithm.convert_point import convert_3D_point, convert_screen_point
 from argorithm.midle_line import Midle_3D_line
+from argorithm.handle_rotate import handle_axis
 from Window import ctr_Win
-import const
 from Rubix_ctr import color_set
+
+import const
 
 class Rubix_cube():
     def __init__(self, block_x, block_y, block_z, block_side, block_distance):
@@ -18,6 +20,7 @@ class Rubix_cube():
         self.Block_appear = []
         self.block_point_pos = []
         self.face_appear = []
+
 
     def create_cube(self):
         #Center = [0,0,0]

@@ -1,2 +1,10 @@
-A = {1:"h", 2:"m"}
-print(type(A))
+class VN():
+    def __init__(self):
+        self.a = 10
+
+
+M = VN()
+
+M.a += 5
+
+print(M.a)
