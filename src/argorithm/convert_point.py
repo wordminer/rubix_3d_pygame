@@ -9,7 +9,7 @@ def convert_3D_point(point : tuple[float, float, float], Camera : tuple[float, f
     return ((x - Camera[0]),(y - Camera[1]))
 
 def convert_screen_point(dis_width, dis_hight, point_real : tuple[float, float, float], scale_x, scale_y):
-    point_scale = [point_real[0] * scale_x, point_real[1] * scale_y]
-    point_screen = [point_scale[0] + dis_width/2, point_scale[1] + dis_hight/2]
+    point_scale = (point_real[0] * scale_x, point_real[1] * scale_y)
+    point_screen = (point_scale[0] + dis_width/2, point_scale[1] + dis_hight/2)
 
     return point_screen

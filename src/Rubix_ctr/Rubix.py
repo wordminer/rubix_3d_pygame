@@ -3,6 +3,7 @@ from argorithm.convert_point import convert_3D_point, convert_screen_point
 from argorithm.midle_line import Midle_3D_line
 from Window import ctr_Win
 import const
+from Rubix_ctr import color_set
 
 class Rubix_cube():
     def __init__(self, block_x, block_y, block_z, block_side, block_distance):
@@ -14,7 +15,7 @@ class Rubix_cube():
         self.block_distance = block_distance
 
         self.block = []
-        self.block_appear = []
+        self.Block_appear = []
         self.block_point_pos = []
         self.face_appear = []
 
@@ -46,14 +47,14 @@ class Rubix_cube():
         #         print(face)
 
     def set_distance_argument(self, Camera_pos : tuple[float, float, float]):
-        self.block_appear = []
+        self.Block_appear = []
         self.block_point_pos = []
 
-        self.block_appear = [
+        self.Block_appear = [
             [distance_in_space(Camera_pos, block_pos[0]), k] 
             for k, block_pos in enumerate(self.block)]
         
-        self.block_appear.sort(reverse=True)
+        self.Block_appear.sort(reverse=True)
         
         for block_pos in self.block:
             Point_coordinate =  [[distance_in_space(point_coord, Camera_pos), k] for k,point_coord in enumerate(block_pos[1])]
@@ -63,27 +64,49 @@ class Rubix_cube():
             #set face distance using midle point of square
             Face_dis = []
             for k,face_stt in enumerate(const.FACE_POS):
-                Face_dis.append([distance_in_space(Camera_pos, Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])), k])
+                Mid_pos = Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])
+                Face_dis.append([distance_in_space(Camera_pos, Mid_pos),
+                                 k, color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
+                                                        self.block_side,
+                                                        self.block_distance)])
             
             Face_dis.sort(reverse=True)
             self.face_appear.append(Face_dis)
 
-            
+        # print(self.face_appear)
+
+    def convert_point_show(self, point : tuple[float, float, float], width : int, hight : int, Camera_pos : tuple[float, float, float], Scale : list[float, float]):
+        convered_point = convert_screen_point(
+                    width, hight,
+                    convert_3D_point(point, Camera_pos),
+                    Scale[0], Scale[1])
+        
+        return convered_point
 
 
     def show_rubix_point(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float], Point_argument : list[str, int]):
         
-        for block_stt in self.block_appear:
+        for block_stt in self.Block_appear:
             point_pos = self.block_point_pos[block_stt[1]]
             
             for face_point in point_pos:
                 point = self.block[block_stt[1]][1][face_point[1]]
-                convered_point = convert_screen_point(
-                    Window.width, Window.hight,
-                    convert_3D_point(point, Camera_pos),
-                    Scale[0], Scale[1]
-                )
+
+                convered_point = self.convert_point_show(point,
+                                                     Window.width, Window.hight,
+                                                     Camera_pos, 
+                                                     Scale)            
 
                 #print(convered_point)
 
                 Window.draw_point(Point_argument[0], convered_point, Point_argument[1])
+
+    def show_rubix_face(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float], Point_argument : list[str, int]):
+        for block_stt in self.Block_appear:
+            for face_stt in self.face_appear[block_stt[1]]:
+                Face = [self.convert_point_show(self.block[block_stt[1]][1][const.FACE_POS[face_stt[1]][k]],
+                                                Window.width, Window.hight,
+                                                Camera_pos, 
+                                                Scale) 
+                        for k in range(4)]
+                Window.draw_polygon(tuple(Face), face_stt[2])
