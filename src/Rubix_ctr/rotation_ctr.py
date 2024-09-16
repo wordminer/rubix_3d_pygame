@@ -6,6 +6,12 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
         if Rotation_angel[k_rotate] == 0:
             continue
                 
+        if k_rotate == 0:
+            if abs(Cube.Axis_rotate_cube.Rotated_angle[0] + Rotation_angel[0]) > 90:
+                continue
+
+            Cube.Axis_rotate_cube.rotate_axis(Rotation_angel[0], 0)
+        
         for block_stt, block in enumerate(Cube.block):
             for k, point in enumerate(block[1]):
                 Cube.block[block_stt][1][k] = rotate_point([0,0,0], 
@@ -17,5 +23,4 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
                                                     Cube.Axis_rotate_cube.Axis[k_rotate],
                                                     block[0], 
                                                     Rotation_angel[k_rotate])
-        if k_rotate == 0:
-            Cube.Axis_rotate_cube.rotate_axis(Rotation_angel[0], 0)
+        
