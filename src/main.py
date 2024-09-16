@@ -1,4 +1,6 @@
 from Window.ctr_Win import WINDOW 
+from Window.ctr_mouse import Handle_mouse
+
 from Rubix_ctr import Rubix
 from Rubix_ctr import rotation_ctr
 
@@ -6,26 +8,26 @@ import const
 
 game_dis = WINDOW(const.WIN_WIDTH, const.WIN_HIGHT)
 Cube = Rubix.Rubix_cube(3,3,3,1,0.2)
+Mouse = Handle_mouse(0.2)
 
 Cube.create_cube()
 
 x = 0
 
-Cube.set_distance_argument(const.CAMERA_COORD)
-rotation_ctr.Rotate_Cube(Cube, (45,0,0))
+# Cube.set_distance_argument(const.CAMERA_COORD)
+# rotation_ctr.Rotate_Cube(Cube, (45,0,0))
 
 while True:
     
     event = game_dis.control_event()
-    
-    
+
+    Mouse.Checking_mouse(game_dis.event_save)
+    x_mouse, y_mouse = Mouse.Mouse_move()
 
     Cube.set_distance_argument(const.CAMERA_COORD)
-    rotation_ctr.Rotate_Cube(Cube, (0,1,0))
+    rotation_ctr.Rotate_Cube(Cube, (-y_mouse/50,x_mouse/50,0))
 
     #print(Cube.Color_face)
-
-    
 
     const.CAMERA_COORD = (x,0,10)
     if event == False:
