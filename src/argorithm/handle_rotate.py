@@ -20,7 +20,7 @@ def rotate_point(Center:list,vector:list,point:list,angle): #rotate point around
     virtual_point = product2quaternion(product2quaternion(quaternion_vector_1,virtual_point),quaternion_vector)
 
     del(virtual_point[0])
-    Rotate_point = [virtual_point[0] + Center[0] ,virtual_point[1] + Center[1] ,virtual_point[2] + Center[2]]
+    Rotate_point = (virtual_point[0] + Center[0] ,virtual_point[1] + Center[1] ,virtual_point[2] + Center[2])
     return Rotate_point
 
 class handle_axis():
@@ -29,11 +29,11 @@ class handle_axis():
         self.Axis = [vector_x,vector_y,vector_z]
         self.Rotated_angle = [0,0,0] # == [x_angle_rotated,y_angle_rotated,...]
     
-    def rotate_axis(self,Angle : list[list, list, list], k : int): #Angle = [x_angle,y_angle,z_angle], k is the key of list Axis which is Rotation Axis
+    def rotate_axis(self,Angle : float, k : int): #Angle = [x_angle,y_angle,z_angle], k is the key of list Axis which is Rotation Axis
         
         for c,Axis in enumerate(self.Axis):
             if c != k:
-                self.Axis[c] = rotate_point([0,0,0],self.Axis[k],Axis.copy(),Angle)
+                self.Axis[c] = rotate_point([0,0,0],self.Axis[k],Axis,Angle)
         self.Rotated_angle[k] += Angle
 
         

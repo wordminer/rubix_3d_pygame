@@ -20,6 +20,9 @@ class Rubix_cube():
         self.Block_appear = []
         self.block_point_pos = []
         self.face_appear = []
+        self.Color_face = []
+
+        self.Axis_rotate_cube = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
 
 
     def create_cube(self):
@@ -48,10 +51,12 @@ class Rubix_cube():
         # for k in self.block:
         #     for face in k[1]:
         #         print(face)
+        
 
     def set_distance_argument(self, Camera_pos : tuple[float, float, float]):
         self.Block_appear = []
         self.block_point_pos = []
+        self.face_appear = []
 
         self.Block_appear = [
             [distance_in_space(Camera_pos, block_pos[0]), k] 
@@ -66,13 +71,17 @@ class Rubix_cube():
 
             #set face distance using midle point of square
             Face_dis = []
+            Color = []
             for k,face_stt in enumerate(const.FACE_POS):
                 Mid_pos = Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])
-                Face_dis.append([distance_in_space(Camera_pos, Mid_pos),
-                                 k, color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
-                                                        self.block_side,
-                                                        self.block_distance)])
+                Face_dis.append([distance_in_space(Camera_pos, Mid_pos),k])
+                Color.append(color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
+                                                            self.block_side,
+                                                            self.block_distance))
             
+            if len(self.Color_face) < len(self.block):
+                self.Color_face.append(Color)
+
             Face_dis.sort(reverse=True)
             self.face_appear.append(Face_dis)
 
@@ -106,10 +115,11 @@ class Rubix_cube():
 
     def show_rubix_face(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float], Point_argument : list[str, int]):
         for block_stt in self.Block_appear:
+            print(block_stt)
             for face_stt in self.face_appear[block_stt[1]]:
                 Face = [self.convert_point_show(self.block[block_stt[1]][1][const.FACE_POS[face_stt[1]][k]],
                                                 Window.width, Window.hight,
                                                 Camera_pos, 
                                                 Scale) 
                         for k in range(4)]
-                Window.draw_polygon(tuple(Face), face_stt[2])
+                Window.draw_polygon(tuple(Face), self.Color_face[block_stt[1]][face_stt[1]])
