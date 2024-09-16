@@ -80,10 +80,10 @@ class Rubix_cube():
                                                             self.block_distance))
             
             if len(self.Color_face) < len(self.block):
-                self.Color_face.append(Color)
+                self.Color_face.append(Color.copy())
 
             Face_dis.sort(reverse=True)
-            self.face_appear.append(Face_dis)
+            self.face_appear.append(Face_dis.copy())
 
         # print(self.face_appear)
 
@@ -100,6 +100,11 @@ class Rubix_cube():
         
         for block_stt in self.Block_appear:
             point_pos = self.block_point_pos[block_stt[1]]
+            Window.draw_point(Point_argument[0], self.convert_point_show(self.block[block_stt[1]][0],
+                                                     Window.width, Window.hight,
+                                                     Camera_pos, 
+                                                     Scale)  ,
+                              Point_argument[1])
             
             for face_point in point_pos:
                 point = self.block[block_stt[1]][1][face_point[1]]
@@ -115,7 +120,7 @@ class Rubix_cube():
 
     def show_rubix_face(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float], Point_argument : list[str, int]):
         for block_stt in self.Block_appear:
-            print(block_stt)
+            # print(block_stt)
             for face_stt in self.face_appear[block_stt[1]]:
                 Face = [self.convert_point_show(self.block[block_stt[1]][1][const.FACE_POS[face_stt[1]][k]],
                                                 Window.width, Window.hight,
