@@ -17,11 +17,12 @@ class Handle_mouse():
 
     def Mouse_move(self):
         if self.Is_click:
-            if self.time_couting():
-                self.x, self.y = mouse.get_pos()
             new_x, new_y = mouse.get_pos()
 
-            return new_x - self.x, new_y - self.y
+            x_change, y_change = new_x - self.x, new_y - self.y
+            self.x, self.y = mouse.get_pos()
+
+            return x_change, y_change
         return 0,0
 
     def time_couting(self):
