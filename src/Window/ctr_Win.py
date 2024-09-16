@@ -5,11 +5,9 @@ class WINDOW():
         self.width = width 
         self.hight = hight 
         self.window = display.set_mode((self.width, self.hight))
-        self.event_save = ""
 
     def control_event(self):
         for events in event.get():
-            self.event_save = events
             if events.type == QUIT:
                 return False 
             
