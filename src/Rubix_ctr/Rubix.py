@@ -51,7 +51,30 @@ class Rubix_cube():
         # for k in self.block:
         #     for face in k[1]:
         #         print(face)
-        
+
+    def set_color(self, Camera_pos : tuple[float, float, float]):
+        Del_block = []
+
+        for k,block_pos in enumerate(self.block):
+            #set face distance using midle point of square
+            Color = []
+            for face_stt in const.FACE_POS:
+                Mid_pos = Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])
+                Color.append(color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
+                                                            self.block_side,
+                                                            self.block_distance))
+            
+            if all(color_face == None for color_face in Color):
+                Del_block.append(k)
+                continue
+
+            self.Color_face.append(Color.copy())
+
+        for block_d in Del_block:
+            del(self.block[block_d])
+            for k in range(len(Del_block)):
+                Del_block[k] -= 1
+
 
     def set_distance_argument(self, Camera_pos : tuple[float, float, float]):
         self.Block_appear = []
@@ -71,17 +94,10 @@ class Rubix_cube():
 
             #set face distance using midle point of square
             Face_dis = []
-            Color = []
             for k,face_stt in enumerate(const.FACE_POS):
                 Mid_pos = Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])
                 Face_dis.append([distance_in_space(Camera_pos, Mid_pos),k])
-                Color.append(color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
-                                                            self.block_side,
-                                                            self.block_distance))
             
-            if len(self.Color_face) < len(self.block):
-                self.Color_face.append(Color.copy())
-
             Face_dis.sort(reverse=True)
             self.face_appear.append(Face_dis.copy())
 
