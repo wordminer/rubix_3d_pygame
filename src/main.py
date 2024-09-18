@@ -7,11 +7,11 @@ from Rubix_ctr import rotation_ctr
 import const
 
 game_dis = WINDOW(const.WIN_WIDTH, const.WIN_HIGHT)
-Cube = Rubix.Rubix_cube(5,5,5,1,0.2)
+Cube = Rubix.Rubix_cube(3,3,3,1,0.1)
 Mouse = Handle_mouse()
 
 Cube.create_cube()
-Cube.set_color(const.CAMERA_COORD)
+Cube.set_color()
 
 x = 0
 
@@ -41,7 +41,7 @@ while True:
 
     game_dis.window.fill("GRAY")
     
-    Cube.show_rubix_face(game_dis, const.CAMERA_COORD, [20,20], ["RED", 5])
+    Cube.show_rubix_face(game_dis, const.CAMERA_COORD, [50,50], ["RED", 5])
 
     #Cube.show_rubix_point(game_dis, const.CAMERA_COORD, [50,50], ["RED", 5])
     

@@ -24,3 +24,4 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
                                                     block[0], 
                                                     Rotation_angel[k_rotate])
         
+        Cube.Axis_rotate_blocks.rotate_axis(Rotation_angel[k_rotate], k_rotate)

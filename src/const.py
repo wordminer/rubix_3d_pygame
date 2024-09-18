@@ -1,7 +1,7 @@
 WIN_WIDTH = 800
 WIN_HIGHT = 600
 
-CAMERA_COORD = (0,0,10)
+CAMERA_COORD = (0,0,20)
 
 FACE_POS = (
     (0,1,3,2),

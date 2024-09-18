@@ -21,8 +21,10 @@ class Rubix_cube():
         self.block_point_pos = []
         self.face_appear = []
         self.Color_face = []
+        self.block_rotate_axis = []
 
         self.Axis_rotate_cube = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
+        self.Axis_rotate_blocks = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
 
 
     def create_cube(self):
@@ -52,7 +54,7 @@ class Rubix_cube():
         #     for face in k[1]:
         #         print(face)
 
-    def set_color(self, Camera_pos : tuple[float, float, float]):
+    def set_color(self):
         Del_block = []
 
         for k,block_pos in enumerate(self.block):

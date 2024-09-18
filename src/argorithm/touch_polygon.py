@@ -39,7 +39,7 @@ def line(A,B): # tao duong thang di qua 2 diem A,B
 	return [a,b,c]
 	#pt duong thang co dang ax + by = c
 
-def point_in_polygon(point,Polygon,Center):#check if the point inside the polygon have Center is the inside point
+def point_in_polygon(point:list[list,list], Polygon:list, Center:list[list,list]):#check if the point inside the polygon have Center is the inside point
     count = 0
     if point == Center:
         return True
