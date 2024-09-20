@@ -63,17 +63,17 @@ def rotate_Midle_pos(Cube : rubix.Rubix_cube, Vector_rotate_key : int, rotate_an
     Pos_pressed = Cube.block[block_key][2].copy()
     key_pos_change = const.ROTATION_MIDLE_POS_KEY[Vector_rotate_key]
 
-    print(Pos_pressed, "--->", end = "")
+    # print(Pos_pressed, "--->", end = "")
 
     if number_of_round == 2:
         Cube.block[block_key][2][key_pos_change[0]] = Block_numberes[key_pos_change[-1]] - Pos_pressed[key_pos_change[-1]] - 1
         Cube.block[block_key][2][key_pos_change[1]] = Block_numberes[key_pos_change[0]] - Pos_pressed[key_pos_change[0]] - 1
         return 
 
-    Cube.block[block_key][2][key_pos_change[1]] = Block_numberes[key_pos_change[0]] - Pos_pressed[key_pos_change[0]] - 1
-    Cube.block[block_key][2][key_pos_change[0]] = Pos_pressed[key_pos_change[1]]
+    Cube.block[block_key][2][key_pos_change[handle_rotate + 1]] = Block_numberes[key_pos_change[handle_rotate]] - Pos_pressed[key_pos_change[handle_rotate]] - 1
+    Cube.block[block_key][2][key_pos_change[handle_rotate]] = Pos_pressed[key_pos_change[handle_rotate + 1]]
 
-    print(Cube.block[block_key][2])
+    # print(Cube.block[block_key][2])
 
 def finding_rotate_block(Cube : rubix.Rubix_cube, Vector_rotate_key : int, pos_rotation : int):
     """

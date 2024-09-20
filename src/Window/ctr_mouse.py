@@ -1,4 +1,9 @@
 from pygame import mouse
+from argorithm import touch_polygon
+from Rubix_ctr.Rubix import Rubix_cube
+
+def checking_touch(Cube : Rubix_cube):
+    pass
 
 class Handle_mouse():    
     mouse_pressed = (0,0)
