@@ -1,7 +1,7 @@
 WIN_WIDTH = 800
 WIN_HIGHT = 600
 
-CAMERA_COORD = (0,0,20)
+CAMERA_COORD = (0,0,100)
 
 FACE_POS = (
     (0,1,3,2),
@@ -17,3 +17,5 @@ FACE_COLOR = [
     ["BLUE", "GREEN"],
     ["WHITE", "PURPLE"]
 ]
+
+ROTATION_MIDLE_POS_KEY = [[2,1], [0,2], [1,0]]

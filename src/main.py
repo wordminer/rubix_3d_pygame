@@ -16,7 +16,14 @@ Cube.set_color()
 x = 0
 
 # Cube.set_distance_argument(const.CAMERA_COORD)
-# rotation_ctr.Rotate_Cube(Cube, (45,0,0))
+# rotation_ctr.Rotate_Cube(Cube, (-45,-45,0))
+
+# list_r = rotation_ctr.finding_rotate_block(Cube, 0, 0)
+# rotation_ctr.Rotate_blocks(Cube, 0, 90, list_r)
+# for block_r in list_r:
+#     rotation_ctr.rotate_Midle_pos(Cube, 0, 90, block_r, (3,3,3))
+
+
 
 while True:
     
@@ -28,7 +35,7 @@ while True:
 
     Cube.set_distance_argument(const.CAMERA_COORD)
     rotation_ctr.Rotate_Cube(Cube, (-mouse_pos_change[1], mouse_pos_change[0], 0))
-
+    #rotation_ctr.Rotate_blocks(Cube, 0, 0.1, list_r)
     #print(Cube.Color_face)
 
     const.CAMERA_COORD = (x,0,10)
