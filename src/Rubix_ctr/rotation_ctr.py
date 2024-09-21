@@ -86,3 +86,4 @@ def finding_rotate_block(Cube : rubix.Rubix_cube, Vector_rotate_key : int, pos_r
             List_block_rotate.append(k)
 
     return List_block_rotate
+
