@@ -21,10 +21,23 @@ class Rubix_cube():
         self.block_point_pos = []
         self.face_appear = []
         self.Color_face = []
+        self.Point_corner_pos = []
+        self.Face_represent = [[] for k in range(6)]
+        print(self.Face_represent)
 
         self.Axis_rotate_cube = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
         self.Axis_rotate_blocks = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
 
+    def create_face_represent(self):
+        self.Point_corner_pos = [
+            [x_pos * ((self.block_side) * self.block_x /2  + self.block_distance * (self.block_x /2 - 1)  ),
+             y_pos * ((self.block_side) * self.block_y /2  + self.block_distance * (self.block_y /2 - 1)  ),
+             z_pos * ((self.block_side) * self.block_z /2  + self.block_distance * (self.block_z /2 - 1)  )]
+             for x_pos in [-1,1]
+             for y_pos in [-1,1]
+             for z_pos in [-1,1]
+        ]
+        #print(self.Point_corner_pos)
 
     def create_cube(self):
         #Center = [0,0,0]
@@ -33,10 +46,9 @@ class Rubix_cube():
         
         self.block = [
             [ [Start_point[k] + (self.block_side + self.block_distance) * Pos for k, Pos in enumerate([x,y,z])], [], [x,y,z] ]
-
             for x in range(self.block_x) 
-                for y in range(self.block_y)
-                     for z in range(self.block_z)
+            for y in range(self.block_y)
+            for z in range(self.block_z)
         ]
 
         # start to put coord in to each block
@@ -45,25 +57,30 @@ class Rubix_cube():
             self.block[k][1] +=  [
                 [self.block[k][0][i] + self.block_side/2 * vec for i,vec in enumerate([vec_x, vec_y, vec_z])]
                 for vec_x in [-1,1]
-                    for vec_y in [-1,1]
-                        for vec_z in [-1,1]
+                for vec_y in [-1,1]
+                for vec_z in [-1,1]
             ] 
 
         # for k in self.block:
         #     for face in k[1]:
         #         print(face)
 
-    def set_color(self):
+    def set_color(self, Color_blank):
+        """Color_blank = None / "WHITE" / "#f000" / (0,0,0)"""
         Del_block = []
 
         for k,block_pos in enumerate(self.block):
             #set face distance using midle point of square
             Color = []
-            for face_stt in const.FACE_POS:
+            for face_key,face_stt in enumerate(const.FACE_POS):
                 Mid_pos = Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])
-                Color.append(color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
+                face_color, Axis_face_key = color_set.Get_color(Mid_pos, (self.block_x, self.block_y, self.block_z), 
                                                             self.block_side,
-                                                            self.block_distance))
+                                                            self.block_distance, Color_blank)
+                Color.append(face_color)
+
+                if Axis_face_key != None:
+                    self.Face_represent[Axis_face_key].append([k - len(Del_block), face_key])
             
             if all(color_face == None for color_face in Color):
                 Del_block.append(k)
@@ -76,6 +93,7 @@ class Rubix_cube():
             for k in range(len(Del_block)):
                 Del_block[k] -= 1
 
+        print(self.Face_represent)
 
     def set_distance_argument(self, Camera_pos : tuple[float, float, float]):
         self.Block_appear = []
@@ -120,7 +138,7 @@ class Rubix_cube():
             Window.draw_point(Point_argument[0], self.convert_point_show(self.block[block_stt[1]][0],
                                                      Window.width, Window.hight,
                                                      Camera_pos, 
-                                                     Scale)  ,
+                                                     Scale),
                               Point_argument[1])
             
             for face_point in point_pos:
