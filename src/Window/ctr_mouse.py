@@ -18,10 +18,15 @@ class Handle_mouse():
             touching = None
             if self.Is_move_block == False and self.Is_move_cube == False:
                 touching = check_touch_rubix(Cube, mouse.get_pos(), Win_width, Win_hight, Camera_pos, Scale)
+                #print(touching)
 
             if touching == False :
                 self.Is_move_cube = True 
                 self.mouse_pressed = mouse.get_pos()
+
+            elif touching != False and touching != None:
+                self.Is_move_block = True 
+                self.Is_find_rotate_vector = True
 
             # if check_touch_rubix(Cube, mouse_click):
             #     self.Is_move_block = True 

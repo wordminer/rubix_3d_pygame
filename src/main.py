@@ -13,7 +13,7 @@ Mouse = Handle_mouse()
 
 Cube.create_cube()
 Cube.create_face_represent(const.CAMERA_COORD)
-Cube.set_color(None)
+Cube.set_color("BLACK")
 
 x = 0
 

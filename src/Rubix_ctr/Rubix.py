@@ -80,6 +80,9 @@ class Rubix_cube():
                 Color.append(face_color)
 
                 if Axis_face_key != None:
+                    # print(Axis_face_key)
+                    # print(k - len(Del_block), face_key)
+                    # print("------------------")
                     self.Face_represent[Axis_face_key].append([k - len(Del_block), face_key])
             
             if all(color_face == None for color_face in Color):
