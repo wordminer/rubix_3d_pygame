@@ -1,4 +1,4 @@
-from argorithm.distance import distance_in_space
+from argorithm.distance import distance_of_point
 from argorithm.convert_point import convert_3D_point, convert_screen_point
 from argorithm.midle_line import Midle_3D_line
 from argorithm.handle_rotate import handle_axis
@@ -23,12 +23,12 @@ class Rubix_cube():
         self.Color_face = []
         self.Point_corner_pos = []
         self.Face_represent = [[] for k in range(6)]
-        print(self.Face_represent)
+        self.Face_represent_appear = []
 
         self.Axis_rotate_cube = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
         self.Axis_rotate_blocks = handle_axis([0,0,0], [1,0,0], [0,1,0], [0,0,1])
 
-    def create_face_represent(self):
+    def create_face_represent(self, Camera_pos : tuple[float, float, float]):
         self.Point_corner_pos = [
             [x_pos * ((self.block_side) * self.block_x /2  + self.block_distance * (self.block_x /2 - 1)  ),
              y_pos * ((self.block_side) * self.block_y /2  + self.block_distance * (self.block_y /2 - 1)  ),
@@ -38,7 +38,7 @@ class Rubix_cube():
              for z_pos in [-1,1]
         ]
         #print(self.Point_corner_pos)
-
+        
     def create_cube(self):
         #Center = [0,0,0]
         Start_point = [-(self.block_side + self.block_distance)*(block-1)/2 
@@ -93,21 +93,26 @@ class Rubix_cube():
             for k in range(len(Del_block)):
                 Del_block[k] -= 1
 
-        print(self.Face_represent)
+        # print(self.Face_represent)
 
     def set_distance_argument(self, Camera_pos : tuple[float, float, float]):
         self.Block_appear = []
         self.block_point_pos = []
         self.face_appear = []
-
+        self.Face_represent_appear = []
+        """
+            set distance for block appear
+        """
         self.Block_appear = [
-            [distance_in_space(Camera_pos, block_pos[0]), k] 
+            [distance_of_point(Camera_pos, block_pos[0], True), k] 
             for k, block_pos in enumerate(self.block)]
         
         self.Block_appear.sort(reverse=True)
-        
+        """
+            set distance for each face in block
+        """
         for block_pos in self.block:
-            Point_coordinate =  [[distance_in_space(point_coord, Camera_pos), k] for k,point_coord in enumerate(block_pos[1])]
+            Point_coordinate =  [[distance_of_point(point_coord, Camera_pos, True), k] for k,point_coord in enumerate(block_pos[1])]
             Point_coordinate.sort(reverse=True)
             self.block_point_pos.append(Point_coordinate)
 
@@ -115,10 +120,22 @@ class Rubix_cube():
             Face_dis = []
             for k,face_stt in enumerate(const.FACE_POS):
                 Mid_pos = Midle_3D_line(block_pos[1][face_stt[1]], block_pos[1][face_stt[3]])
-                Face_dis.append([distance_in_space(Camera_pos, Mid_pos),k])
+                Face_dis.append([distance_of_point(Camera_pos, Mid_pos, True),k])
             
             Face_dis.sort(reverse=True)
             self.face_appear.append(Face_dis.copy())
+        """
+            set distance for 4 corner of cube
+        """
+        for key, face_stt in enumerate(const.FACE_POS):
+            Midpoint = Midle_3D_line(self.Point_corner_pos[face_stt[0]], self.Point_corner_pos[face_stt[2]])
+            #print(self.Point_corner_pos)
+            self.Face_represent_appear.append([distance_of_point(Midpoint, Camera_pos, True), key])
+
+        self.Face_represent_appear.sort()
+        # print(self.Face_represent_appear)
+        # print("//////////////////////")
+
 
         # print(self.face_appear)
 

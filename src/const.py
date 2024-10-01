@@ -2,6 +2,7 @@ WIN_WIDTH = 1000
 WIN_HIGHT = 600
 
 CAMERA_COORD = (0,0,100)
+WIN_SCALE = [50,50]
 
 FACE_POS = (
     (0,1,3,2),
@@ -15,7 +16,7 @@ FACE_POS = (
 FACE_DIRECTION_AXIS = [3,0,1,4,2,5]
 
 FACE_COLOR = [
-    ["RED", "YELLOW"],
+    ["YELLOW", "RED"],
     ["BLUE", "GREEN"],
     ["WHITE", "PURPLE"]
 ]

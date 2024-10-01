@@ -25,6 +25,12 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
                                                     Cube.Axis_rotate_cube.Axis[k_rotate],
                                                     block[0], 
                                                     Rotation_angel[k_rotate])
+            
+        for corner_key, corner_pos in enumerate(Cube.Point_corner_pos):
+            Cube.Point_corner_pos[corner_key] = rotate_point([0,0,0], 
+                                                            Cube.Axis_rotate_cube.Axis[k_rotate],
+                                                            corner_pos, 
+                                                            Rotation_angel[k_rotate])
         
         Cube.Axis_rotate_blocks.rotate_axis(Rotation_angel[k_rotate], k_rotate)
 

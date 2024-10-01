@@ -3,16 +3,17 @@ from Window.ctr_mouse import Handle_mouse
 
 from Rubix_ctr import Rubix
 from Rubix_ctr import rotation_ctr
+from Rubix_ctr import touching_check
 
 import const
 
 game_dis = WINDOW(const.WIN_WIDTH, const.WIN_HIGHT)
-Cube = Rubix.Rubix_cube(1,1,1,1,0)
+Cube = Rubix.Rubix_cube(3,3,3,1,0.3)
 Mouse = Handle_mouse()
 
 Cube.create_cube()
-Cube.create_face_represent()
-Cube.set_color("#606060")
+Cube.create_face_represent(const.CAMERA_COORD)
+Cube.set_color(None)
 
 x = 0
 
@@ -31,13 +32,14 @@ while True:
     event = game_dis.control_event()
 
     mouse_pos_change = Mouse.Move_cube()
-    Mouse.checking_mouse(Cube, [1,1])
+    Mouse.checking_mouse(Cube, const.WIN_SCALE, const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD)
     
-
+    
     Cube.set_distance_argument(const.CAMERA_COORD)
     rotation_ctr.Rotate_Cube(Cube, (-mouse_pos_change[1], mouse_pos_change[0], 0))
     #rotation_ctr.Rotate_blocks(Cube, 0, 0.1, list_r)
     #print(Cube.Color_face)
+    #touching_check.check_touch_rubix(Cube, (500,300), const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD, const.WIN_SCALE)
 
     const.CAMERA_COORD = (x,0,10)
     if event == False:
@@ -49,7 +51,7 @@ while True:
 
     game_dis.window.fill("GRAY")
     
-    Cube.show_rubix_face(game_dis, const.CAMERA_COORD, [50,50], ["RED", 5])
+    Cube.show_rubix_face(game_dis, const.CAMERA_COORD, const.WIN_SCALE, ["RED", 5])
 
     #Cube.show_rubix_point(game_dis, const.CAMERA_COORD, [50,50], ["RED", 5])
     
