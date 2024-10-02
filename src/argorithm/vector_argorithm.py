@@ -1,5 +1,5 @@
 from argorithm.distance import distance_of_point
-from math import acos,pi
+from math import acos, pi, cos, radians
 
 def find_vec_angle(vec_1 : tuple[float,float], vec_2 : tuple[float,float]):
     scalar_product = vec_1[0]*vec_2[0] + vec_1[1]*vec_2[1]
@@ -13,8 +13,8 @@ def find_vec_angle(vec_1 : tuple[float,float], vec_2 : tuple[float,float]):
 
     angle_vec = angle_radian * 180 / pi
     if angle_vec > 90:
-        return 180 - angle_vec, -1
-    return angle_vec, 1
+        return 180 - angle_vec, 1
+    return angle_vec, -1
 
 def Is_in_good_coord(coordinate : tuple[float, float]):
     if (abs(coordinate[1]) >= 0 and abs(coordinate[0]) >= 0):

@@ -6,6 +6,7 @@ from argorithm.vector_argorithm import find_vec_angle, perpendicular_vector_dire
 import const
 import argorithm.convert_point as convert
 
+
 def check_touch_rubix(Cube : Rubix_cube, mouse_pos : tuple[float, float], Win_width, Win_hight, Camera_pos : tuple[float, float, float], Scale : tuple[int, int]):
     """
         checking touch with 6 face of cube using face present first
@@ -45,8 +46,8 @@ def check_touch_rubix(Cube : Rubix_cube, mouse_pos : tuple[float, float], Win_wi
                     # print(Face_screen)
                     # print(point_block_check[face_stt_check[0]])
                     # print(mouse_pos)
-                    Cube.Color_face[face_check[0]][face_check[1]] = "BLACK"
-                    return face_check
+                    # Cube.Color_face[face_check[0]][face_check[1]] = "BLACK"
+                    return (face_check[0], direction_touched_key)
 
     
     return False
@@ -59,6 +60,9 @@ def Finding_rotate_direction(vector_touch_key : int, Cube : Rubix_cube, mouse_ch
     """
     max_angle = 0
     vector_choose = 0
+    if vector_touch_key >= 3:
+        vector_touch_key -= 3
+
     for axis_key in range(3):
 
         if axis_key != vector_touch_key:
@@ -72,8 +76,7 @@ def Finding_rotate_direction(vector_touch_key : int, Cube : Rubix_cube, mouse_ch
     perpendicular_vec = perpendicular_vector_direc(vector_choose[1])
     # print(vector_choose[1])
     # print(perpendicular_vec)
-    direc_rotate = find_vec_angle(perpendicular_vec, mouse_change_vector)
-    return vector_choose[0], direc_rotate    
+    return vector_choose[0],  perpendicular_vec
             
 
 def take_convert_vector(Cube : Rubix_cube, Vector_key : int, Camera_pos : tuple[float, float, float]):

@@ -12,7 +12,10 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
             if abs(Cube.Axis_rotate_cube.Rotated_angle[0] + Rotation_angel[0]) > 90:
                 continue
 
-            Cube.Axis_rotate_cube.rotate_axis(Rotation_angel[0], 0)
+            Cube.Axis_rotate_cube.rotate_axis(Rotation_angel[0], 0, Cube.Axis_rotate_cube.Axis[0])
+
+        Cube.Axis_rotate_blocks.rotate_axis(Rotation_angel[k_rotate], k_rotate, Cube.Axis_rotate_cube.Axis[k_rotate])
+
         
         for block_stt, block in enumerate(Cube.block):
             for k, point in enumerate(block[1]):
@@ -32,8 +35,7 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
                                                             corner_pos, 
                                                             Rotation_angel[k_rotate])
         
-        Cube.Axis_rotate_blocks.rotate_axis(Rotation_angel[k_rotate], k_rotate)
-
+        
 
 def Rotate_blocks(Cube : rubix.Rubix_cube, Vector_rotate_key : int, rotate_angle : float, block_rotate_key : list):
     for block_stt in block_rotate_key:
@@ -86,6 +88,8 @@ def finding_rotate_block(Cube : rubix.Rubix_cube, Vector_rotate_key : int, pos_r
         pos rotation mean the x or y or z pos in Cube.block[k][2] 
     """
     List_block_rotate = []
+
+    if Vector_rotate_key >= 3: Vector_rotate_key -= 3
 
     for k,block in enumerate(Cube.block):
         if block[2][Vector_rotate_key] == pos_rotation:
