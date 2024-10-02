@@ -16,9 +16,9 @@ Cube.set_color("BLACK")
 
 x = 0
 
-# Cube.set_distance_argument(const.CAMERA_COORD)
-# rotation_ctr.Rotate_Cube(Cube, (10,80,0))
-# rotation_ctr.Rotate_Cube(Cube, (30,0,0))
+Cube.set_distance_argument(const.CAMERA_COORD)
+rotation_ctr.Rotate_Cube(Cube, (20,0,0))
+rotation_ctr.Rotate_Cube(Cube, (30,50,0))
 
 # print(Cube.Axis_rotate_blocks.Axis)
 # print(Cube.Axis_rotate_cube.Axis)
@@ -51,7 +51,7 @@ while True:
     if event == False:
         exit(0)
     elif event == "a":
-        rotation_ctr.Rotate_blocks(Cube, 2, 90, rotation_ctr.finding_rotate_block(Cube, 2, 2))
+        rotation_ctr.Rotate_blocks(Cube, 0, 90, rotation_ctr.finding_rotate_block(Cube, 0, 2))
     elif event == "d":
         x -= 0.05
 

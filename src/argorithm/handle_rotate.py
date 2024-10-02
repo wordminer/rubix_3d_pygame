@@ -29,12 +29,14 @@ class handle_axis():
         self.Axis = [vector_x,vector_y,vector_z]
         self.Rotated_angle = [0,0,0] # == [x_angle_rotated,y_angle_rotated,...]
     
-    def rotate_axis(self,Angle : float, k : int, Vector_move : list[float, float, float]): #Angle = [x_angle,y_angle,z_angle], k is the key of list Axis which is Rotation Axis
+    def rotate_axis(self,Angle : float, Vector_move : list[float, float, float]): #Angle = [x_angle,y_angle,z_angle], k is the key of list Axis which is Rotation Axis
         
         for c,Axis in enumerate(self.Axis):
-            if c != k:
-                self.Axis[c] = rotate_point([0,0,0],Vector_move,Axis,Angle)
-        self.Rotated_angle[k] += Angle
+            if Vector_move == Axis:
+                 self.Rotated_angle[c] += Angle
+                 continue
+            self.Axis[c] = rotate_point([0,0,0],Vector_move,Axis,Angle)
+        
 
         
 #test 
