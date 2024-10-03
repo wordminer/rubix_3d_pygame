@@ -173,7 +173,7 @@ class Rubix_cube():
 
                 Window.draw_point(Point_argument[0], convered_point, Point_argument[1])
 
-    def show_rubix_face(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float], Point_argument : list[str, int]):
+    def show_rubix_face(self, Window : ctr_Win.WINDOW, Camera_pos : tuple[float, float, float], Scale : list[float, float]):
         for block_stt in self.Block_appear:
             # print(block_stt)
             for face_stt in self.face_appear[block_stt[1]]:
