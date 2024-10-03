@@ -49,7 +49,7 @@ while True:
 
         for block_key in mouse_pos_change[1][1]:
             rotation_ctr.rotate_Midle_pos(Cube, mouse_pos_change[1][0], int(check_mouse[1] + check_mouse[0]),
-                                        block_key, (3,3,3))
+                                        block_key, const.RUBIX_BLOCK)
     #rotation_ctr.Rotate_blocks(Cube, 0, 0.1, list_r)
     #print(Cube.Color_face)
     #touching_check.check_touch_rubix(Cube, (500,300), const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD, const.WIN_SCALE)
