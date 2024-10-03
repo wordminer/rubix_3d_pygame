@@ -65,6 +65,9 @@ def rotate_Midle_pos(Cube : rubix.Rubix_cube, Vector_rotate_key : int, rotate_an
     number_of_round = congruance_of_p(4, rotate_angle/90)
     handle_rotate = 0
 
+    if number_of_round == 0:
+        return 
+
     if number_of_round < 0:
         handle_rotate = -1
     
@@ -74,14 +77,14 @@ def rotate_Midle_pos(Cube : rubix.Rubix_cube, Vector_rotate_key : int, rotate_an
     # print(Pos_pressed, "--->", end = "")
 
     if number_of_round == 2:
-        Cube.block[block_key][2][key_pos_change[0]] = Block_numberes[key_pos_change[-1]] - Pos_pressed[key_pos_change[-1]] - 1
-        Cube.block[block_key][2][key_pos_change[1]] = Block_numberes[key_pos_change[0]] - Pos_pressed[key_pos_change[0]] - 1
-        return 
-
-    Cube.block[block_key][2][key_pos_change[handle_rotate + 1]] = Block_numberes[key_pos_change[handle_rotate]] - Pos_pressed[key_pos_change[handle_rotate]] - 1
-    Cube.block[block_key][2][key_pos_change[handle_rotate]] = Pos_pressed[key_pos_change[handle_rotate + 1]]
+        Cube.block[block_key][2][key_pos_change[handle_rotate]] = Block_numberes[key_pos_change[handle_rotate]] - Pos_pressed[key_pos_change[handle_rotate]] - 1
+        Cube.block[block_key][2][key_pos_change[handle_rotate + 1]] = Block_numberes[key_pos_change[handle_rotate + 1]] - Pos_pressed[key_pos_change[handle_rotate + 1]] - 1 
+    else:
+        Cube.block[block_key][2][key_pos_change[handle_rotate + 1]] = Block_numberes[key_pos_change[handle_rotate]] - Pos_pressed[key_pos_change[handle_rotate]] - 1
+        Cube.block[block_key][2][key_pos_change[handle_rotate]] = Pos_pressed[key_pos_change[handle_rotate + 1]]
 
     # print(Cube.block[block_key][2])
+    rotate_face_axis(Cube, Vector_rotate_key, block_key, number_of_round)
 
 def finding_rotate_block(Cube : rubix.Rubix_cube, Vector_rotate_key : int, pos_rotation : int):
     """
@@ -97,3 +100,44 @@ def finding_rotate_block(Cube : rubix.Rubix_cube, Vector_rotate_key : int, pos_r
 
     return List_block_rotate
 
+def rotate_face_axis(Cube : rubix.Rubix_cube, Vector_rotate_key : int, block_stt, round_of_rotate : int):
+    if round_of_rotate == 0:
+        return   
+    
+    Add_list = []
+    Del_list = []
+
+    for face_stt, face in enumerate(Cube.Face_represent):
+        #print(face_stt)
+        if face_stt == Vector_rotate_key or face_stt == Vector_rotate_key + 3:
+            continue
+        Vector_key = face_stt % 3
+        #print(face_stt, Vector_key)
+
+        for stt,block in enumerate(face):
+            if block[0] == block_stt:
+                if round_of_rotate == 2:
+                    new_asix_key = face_stt - 3
+                    
+                else :
+                    for k in range(3):
+                        if k != Vector_key and k != Vector_rotate_key:
+                            new_asix_key = k
+                            break
+                            
+
+                    if Cube.block[block_stt][2][new_asix_key] == 0:
+                        new_asix_key += 3
+
+                #print(face_stt, new_asix_key, block[0])
+                
+                Add_list.append([new_asix_key, block.copy()])
+                Del_list.append([face_stt, stt])
+                break
+
+    for k in range(len(Add_list)):
+        Cube.Face_represent[Add_list[k][0]].append(Add_list[k][1])
+        del(Cube.Face_represent[Del_list[k][0]][Del_list[k][1]])
+                 
+
+        

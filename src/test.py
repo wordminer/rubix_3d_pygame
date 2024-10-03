@@ -14,4 +14,3 @@
 
 # print(touch.Finding_rotate_direction(0,Cube, (0,-1), (0,0,100)))
 
-print((-182)//90)

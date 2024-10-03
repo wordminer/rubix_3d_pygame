@@ -34,7 +34,7 @@ class Handle_mouse():
                 self.Is_find_rotate_vector = True
                 self.mouse_pressed = mouse.get_pos()
                 self.touching = touching
-                print(touching)
+                # print(touching)
 
             # if check_touch_rubix(Cube, mouse_click):
             #     self.Is_move_block = True 
@@ -44,9 +44,13 @@ class Handle_mouse():
             #     self.mouse_pressed = mouse.get_pos() 
         else:
             self.Is_move_cube = False
-            self.Is_move_block = False
-            self.Angle_rotated = 0
-            
+
+            if self.Is_move_block and self.Is_find_rotate_vector == False:
+                angle_rotate_final = (self.rotate_block_final(), self.Angle_rotated)
+                self.Angle_rotated = 0
+                self.Is_move_block = False
+                return angle_rotate_final
+                
     def take_mouse_change(self):
         self.mouse_current = mouse.get_pos()
         mouse_change = (self.mouse_current[0] - self.mouse_pressed[0], 
@@ -62,7 +66,16 @@ class Handle_mouse():
 
         return (lenght_move_vec * angle[1])
 
+    def rotate_block_final(self):
+        he_so = 1
+        if self.Angle_rotated < 0:
+            he_so = -1
+
+        remender_rotate = abs(self.Angle_rotated) % 90
+        if remender_rotate >= 45:
+            return he_so * (90 - remender_rotate)
         
+        return (-1) * he_so * remender_rotate
     
     def Moving(self, Camera_pos : tuple[float,float,float], Cube : Rubix_cube):
         Moving_thing = [(0,0), None]

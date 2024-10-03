@@ -16,9 +16,9 @@ Cube.set_color("BLACK")
 
 x = 0
 
-Cube.set_distance_argument(const.CAMERA_COORD)
-rotation_ctr.Rotate_Cube(Cube, (20,0,0))
-rotation_ctr.Rotate_Cube(Cube, (30,50,0))
+# Cube.set_distance_argument(const.CAMERA_COORD)
+# rotation_ctr.Rotate_Cube(Cube, (20,0,0))
+# rotation_ctr.Rotate_Cube(Cube, (30,50,0))
 
 # print(Cube.Axis_rotate_blocks.Axis)
 # print(Cube.Axis_rotate_cube.Axis)
@@ -35,7 +35,7 @@ while True:
     event = game_dis.control_event()
 
     mouse_pos_change = Mouse.Moving(const.CAMERA_COORD, Cube)
-    Mouse.checking_mouse(Cube, const.WIN_SCALE, const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD)
+    check_mouse = Mouse.checking_mouse(Cube, const.WIN_SCALE, const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD)
     
     
     Cube.set_distance_argument(const.CAMERA_COORD)
@@ -43,6 +43,13 @@ while True:
 
     if mouse_pos_change[1] != None:
         rotation_ctr.Rotate_blocks(Cube, mouse_pos_change[1][0], mouse_pos_change[1][2], mouse_pos_change[1][1])
+
+    if check_mouse != None and mouse_pos_change[1] != None:
+        rotation_ctr.Rotate_blocks(Cube, mouse_pos_change[1][0], check_mouse[0], mouse_pos_change[1][1])
+
+        for block_key in mouse_pos_change[1][1]:
+            rotation_ctr.rotate_Midle_pos(Cube, mouse_pos_change[1][0], int(check_mouse[1] + check_mouse[0]),
+                                        block_key, (3,3,3))
     #rotation_ctr.Rotate_blocks(Cube, 0, 0.1, list_r)
     #print(Cube.Color_face)
     #touching_check.check_touch_rubix(Cube, (500,300), const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD, const.WIN_SCALE)
