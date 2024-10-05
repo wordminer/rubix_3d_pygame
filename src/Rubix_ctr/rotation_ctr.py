@@ -221,7 +221,7 @@ def Rotate_by_code(Cube : rubix.Rubix_cube, Rotate_code):
         else:
             first_face_appear += 3
         
-        print(first_face_appear)
+        #print(first_face_appear)
 
         if block_corner[0][first_face_appear - 3] > 0:
             Handle_rotate_code(Cube, first_face_appear , 90 * Rotate_code[1], 0)
