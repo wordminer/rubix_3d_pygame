@@ -13,6 +13,7 @@ Mouse = Handle_mouse()
 Cube.create_cube()
 Cube.create_face_represent(const.CAMERA_COORD)
 Cube.set_color(const.COLOR_BLANK)
+Cube.set_distance_argument(const.CAMERA_COORD)
 
 
 while True:
@@ -22,8 +23,6 @@ while True:
     mouse_pos_change = Mouse.Moving(const.CAMERA_COORD, Cube)
     check_mouse = Mouse.checking_mouse(Cube, const.WIN_SCALE, const.WIN_WIDTH, const.WIN_HIGHT, const.CAMERA_COORD)
     
-    
-    Cube.set_distance_argument(const.CAMERA_COORD)
     rotation_ctr.Rotate_Cube(Cube, (-mouse_pos_change[0][1], mouse_pos_change[0][0], 0))
 
     if mouse_pos_change[1] != None:
@@ -46,6 +45,7 @@ while True:
         rotation_ctr.Rotate_by_code(Cube, (event))
 
     game_dis.window.fill(const.WIN_FILL_COLOR)
+    Cube.set_distance_argument(const.CAMERA_COORD)
     
     Cube.show_rubix_face(game_dis, const.CAMERA_COORD, const.WIN_SCALE)
  
