@@ -14,21 +14,6 @@ Cube.create_cube()
 Cube.create_face_represent(const.CAMERA_COORD)
 Cube.set_color(const.COLOR_BLANK)
 
-# x = 0
-
-# Cube.set_distance_argument(const.CAMERA_COORD)
-# rotation_ctr.Rotate_Cube(Cube, (20,0,0))
-# rotation_ctr.Rotate_Cube(Cube, (30,50,0))
-
-# print(Cube.Axis_rotate_blocks.Axis)
-# print(Cube.Axis_rotate_cube.Axis)
-
-# list_r = rotation_ctr.finding_rotate_block(Cube, 0, 0)
-# rotation_ctr.Rotate_blocks(Cube, 0, 90, list_r)
-# for block_r in list_r:
-#     rotation_ctr.rotate_Midle_pos(Cube, 0, 90, block_r, (3,3,3))
-
-
 
 while True:
     
@@ -57,17 +42,13 @@ while True:
     # const.CAMERA_COORD = (x,0,10)
     if event == False:
         exit(0)
-    # elif event == "a":
-    #     rotation_ctr.Rotate_blocks(Cube, 0, 90, rotation_ctr.finding_rotate_block(Cube, 0, 2))
-    # elif event == "d":
-    #     x -= 0.05
+    elif event != None:
+        rotation_ctr.Rotate_by_code(Cube, (event))
 
     game_dis.window.fill(const.WIN_FILL_COLOR)
     
     Cube.show_rubix_face(game_dis, const.CAMERA_COORD, const.WIN_SCALE)
-
-    #Cube.show_rubix_point(game_dis, const.CAMERA_COORD, [50,50], ["RED", 5])
-    
+ 
     game_dis.update_event()
 
 # Cube.set_distance_argument(const.CAMERA_COORD)

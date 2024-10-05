@@ -13,7 +13,7 @@ def Rotate_Cube(Cube : rubix.Rubix_cube, Rotation_angel : tuple[float, float, fl
                 continue
 
             Cube.Axis_rotate_cube.rotate_axis(Rotation_angel[0], Cube.Axis_rotate_cube.Axis[0])
-
+        
         Cube.Axis_rotate_blocks.rotate_axis(Rotation_angel[k_rotate], Cube.Axis_rotate_cube.Axis[k_rotate])
 
         
@@ -140,4 +140,96 @@ def rotate_face_axis(Cube : rubix.Rubix_cube, Vector_rotate_key : int, block_stt
         del(Cube.Face_represent[Del_list[k][0]][Del_list[k][1]])
                  
 
+def indentify_block_rotate(Cube : rubix.Rubix_cube, First_asix_appear : int):
+    highest_face_coner = 0
+    lowerst_face_corner = 0
+    max_coord = 0
+    min_coord = 0
+
+    # const.FACE_DIRECTION_AXIS[Cube.Face_represent_appear[0][1]]
+
+    blocks = Cube.Face_represent[First_asix_appear]
+    
+    for block_stt in blocks:
+        coord = Cube.block[block_stt[0]]
+        #print(coord[0][1])
+        if coord[0][1] + coord[0][0] >= max_coord:
+            max_coord = coord[0][1] + coord[0][0]
+            highest_face_coner = coord[2]
+
+        elif coord[0][1] + coord[0][0] <= min_coord:
+            min_coord = coord[0][1] + coord[0][0]
+            lowerst_face_corner = coord[2]
+    
+    return highest_face_coner, lowerst_face_corner
+
+def indentify_face_rotate(Cube : rubix.Rubix_cube):
+    bottom_face_key = 0
+    top_face_key = 0
+    left_face_key = 0
+    right_face_key = 0
+    min_y_coord = 0
+    max_x_coord = 0
+
+    for k in range(1,5):
+        #print(k)
+        coord_face = Cube.Face_represent_appear[k]
+        #print(coord_face)
+        if coord_face[2][1] <= min_y_coord:
+            min_y_coord = coord_face[2][1]
+            bottom_face_key = const.FACE_DIRECTION_AXIS[coord_face[1]]
         
+        if coord_face[2][0] >= max_x_coord:
+            max_x_coord = coord_face[2][0]
+            left_face_key = const.FACE_DIRECTION_AXIS[coord_face[1]]
+    #print(bottom_face_key, left_face_key)
+
+    if bottom_face_key >= 3 : top_face_key = bottom_face_key - 3
+    else : top_face_key = bottom_face_key + 3
+
+    if left_face_key >= 3 : right_face_key = left_face_key - 3
+    else : right_face_key = left_face_key + 3
+
+    return [bottom_face_key, top_face_key, left_face_key, right_face_key]
+    
+def Handle_rotate_code(Cube : rubix.Rubix_cube, Asix_rotate_key: int, Rotate_angle : int, Block_represent_coord : int):
+    """
+    Rotate_angle should be 90, 180, ... .
+    """
+    rotate_direction = 1
+    if Asix_rotate_key >= 3:
+        Asix_rotate_key -= 3
+        rotate_direction = -1
+    
+    #print(rotate_direction)
+    list_block = finding_rotate_block(Cube, Asix_rotate_key, Block_represent_coord)
+    Rotate_blocks(Cube, Asix_rotate_key, Rotate_angle * rotate_direction, list_block)
+    for block_stt in list_block:
+        rotate_Midle_pos(Cube, Asix_rotate_key, Rotate_angle * rotate_direction, block_stt, (Cube.block_x, Cube.block_y, Cube.block_z))
+
+def Rotate_by_code(Cube : rubix.Rubix_cube, Rotate_code):
+    first_face_appear = const.FACE_DIRECTION_AXIS[Cube.Face_represent_appear[0][1]]
+    block_corner = indentify_block_rotate(Cube, first_face_appear)
+    
+    if Rotate_code[0] == 4:
+        Handle_rotate_code(Cube, first_face_appear, 90 * Rotate_code[1], block_corner[0][first_face_appear-3])
+        return
+    
+    elif Rotate_code[0] == 5:
+        if first_face_appear >= 3:
+            first_face_appear -= 3
+        else:
+            first_face_appear += 3
+        
+        print(first_face_appear)
+
+        if block_corner[0][first_face_appear - 3] > 0:
+            Handle_rotate_code(Cube, first_face_appear , 90 * Rotate_code[1], 0)
+            return 
+        Handle_rotate_code(Cube, first_face_appear , 90 * Rotate_code[1], 2)
+        return
+    
+    face_rotate = indentify_face_rotate(Cube)
+    # print(face_rotate[2])
+    # print(face_rotate[Rotate_code[0][1]], 90 * Rotate_code[1], block_corner[Rotate_code[0][0]])
+    Handle_rotate_code(Cube, face_rotate[Rotate_code[0][1]], 90 * Rotate_code[1], block_corner[Rotate_code[0][0]][face_rotate[Rotate_code[0][1]] - 3])

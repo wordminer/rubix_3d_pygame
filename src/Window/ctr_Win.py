@@ -1,4 +1,15 @@
-from pygame import display, event, QUIT, draw, KEYDOWN, K_a, K_d
+from pygame import key, display, event, QUIT, draw, KEYDOWN, K_LSHIFT, K_LCTRL
+import const
+
+def Is_in_shift(key_get):
+    if key_get[K_LSHIFT]:
+        return -1
+    return 1
+
+def Is_in_ctr(key_get):
+    if key_get[K_LCTRL]:
+        return 2
+    return 1
 
 class WINDOW():
     def __init__(self, width, hight):
@@ -12,10 +23,10 @@ class WINDOW():
                 return False 
             
             if events.type == KEYDOWN:
-                if events.key == K_a:
-                    return "a"
-                if events.key == K_d:
-                    return "d"
+                key_press = key.get_pressed()
+                if events.key in const.KEY_PRESS:
+                    return (const.KEY_PRESS[events.key] , Is_in_shift(key_press) * Is_in_ctr(key_press))
+                
             
         
     def draw_point(self, color_point, coord_point : tuple[float, float], radius_point):

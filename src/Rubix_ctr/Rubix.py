@@ -13,6 +13,8 @@ class Rubix_cube():
         self.block_y = block_y
         self.block_z = block_z
 
+        self.Max_hight = 0
+
         self.block_side = block_side
         self.block_distance = block_distance
 
@@ -37,6 +39,7 @@ class Rubix_cube():
              for y_pos in [-1,1]
              for z_pos in [-1,1]
         ]
+        #self.Max_hight = distance_of_point(self.Point_corner_pos[0], [0,0,0])
         #print(self.Point_corner_pos)
         
     def create_cube(self):
@@ -133,7 +136,7 @@ class Rubix_cube():
         for key, face_stt in enumerate(const.FACE_POS):
             Midpoint = Midle_3D_line(self.Point_corner_pos[face_stt[0]], self.Point_corner_pos[face_stt[2]])
             #print(self.Point_corner_pos)
-            self.Face_represent_appear.append([distance_of_point(Midpoint, Camera_pos, True), key])
+            self.Face_represent_appear.append([distance_of_point(Midpoint, Camera_pos, True), key, Midpoint])
 
         self.Face_represent_appear.sort()
         # print(self.Face_represent_appear)

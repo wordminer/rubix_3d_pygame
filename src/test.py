@@ -14,3 +14,13 @@
 
 # print(touch.Finding_rotate_direction(0,Cube, (0,-1), (0,0,100)))
 
+
+    # key_press = pygame.key.get_pressed()
+    # if key_press[pygame.K_a]:
+    #     if key_press[pygame.K_LSHIFT]:
+    #         print("a1")
+    #     else:
+    #         print("a")
+
+A = [1,2,3]
+print(A[-3])

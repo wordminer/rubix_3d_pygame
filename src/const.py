@@ -1,3 +1,5 @@
+from pygame import K_a, K_u, K_d, K_r, K_l, K_f, K_b
+
 WIN_WIDTH = 1000
 WIN_HIGHT = 600
 
@@ -29,3 +31,13 @@ FACE_COLOR = [
 ]
 
 ROTATION_MIDLE_POS_KEY = [[2,1], [0,2], [1,0]]
+
+KEY_PRESS = {
+    K_u : (1,0),
+    K_d : (0,1),
+    K_r : (0,2),
+    K_l : (1,3),
+    K_f : 4,
+    K_b : 5
+}
+
